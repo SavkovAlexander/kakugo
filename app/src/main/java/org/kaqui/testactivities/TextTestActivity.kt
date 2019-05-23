@@ -90,7 +90,9 @@ class TextTestActivity : TestActivityBase() {
                                             if (shouldIgnoreTextInput) {
                                                 ""
                                             } else {
-                                                source
+                                                source.filter { c: Char ->
+                                                    c.isLetter()
+                                                }
                                             }
                                         })
                                     }
