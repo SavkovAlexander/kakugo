@@ -120,4 +120,8 @@
         <br/>- Scores are now distinct per test category, reading tests will not impact scores of writing tests
         <br/>- Added setting to set a custom Japanese font
     ]]></string>
+
+    <string name="fast_text_input_title">Fast text input</string>
+    <string name="fast_text_input_summary">Text will be checked during input. Fast, but beware of typos!</string>
+
 </resources>

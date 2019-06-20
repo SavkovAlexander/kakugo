@@ -18,7 +18,7 @@ android {
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "org.kaqui"
+        applicationId "org.kaqui.internal"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 54
