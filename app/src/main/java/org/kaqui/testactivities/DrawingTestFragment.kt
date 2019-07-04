@@ -8,11 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,9 +19,9 @@ import org.kaqui.model.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.pow
 
-class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
+class DrawingTestFragment : Fragment(), CoroutineScope, TestFragment {
     companion object {
-        private const val TAG = "WritingTestFragment"
+        private const val TAG = "DrawingTestFragment"
 
         private const val KANJI_SIZE = 109
 
@@ -41,7 +37,7 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
         }
 
         @JvmStatic
-        fun newInstance() = WritingTestFragment()
+        fun newInstance() = DrawingTestFragment()
     }
 
     private val testFragmentHolder
@@ -53,6 +49,7 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
 
     private lateinit var currentStrokes: List<Path>
     private lateinit var currentScaledStrokes: List<Path>
+    private var finished = false
     private var currentStroke = 0
     private var missCount = 0
 
@@ -111,6 +108,7 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
         if (savedInstanceState != null) {
             currentStroke = savedInstanceState.getInt("currentStroke")
             missCount = savedInstanceState.getInt("missCount")
+            finished = savedInstanceState.getBoolean("finished")
         }
 
         drawCanvas.post { refreshQuestion() }
@@ -121,6 +119,7 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("currentStroke", currentStroke)
         outState.putInt("missCount", missCount)
+        outState.putBoolean("finished", finished)
         super.onSaveInstanceState(outState)
     }
 
@@ -130,11 +129,13 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
     }
 
     private fun refreshState() {
-        if (currentStroke == currentStrokes.size) {
+        if (finished) {
+            drawCanvas.setAnswerPaths(currentScaledStrokes)
             dontKnowButton.visibility = View.GONE
             hintButton.visibility = View.GONE
             nextButton.visibility = View.VISIBLE
         } else {
+            drawCanvas.setAnswerPaths(listOf())
             nextButton.visibility = View.GONE
             dontKnowButton.visibility = View.VISIBLE
             hintButton.visibility = View.VISIBLE
@@ -145,12 +146,11 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
     override fun startNewQuestion() {
         currentStroke = 0
         missCount = 0
+        finished = false
     }
 
     override fun refreshQuestion() {
         currentStrokes = Database.getInstance(context!!).getStrokes(testEngine.currentQuestion.id)
-
-        refreshState()
 
         testQuestionLayout.questionText.text = testEngine.currentQuestion.getQuestionText(testType)
 
@@ -168,6 +168,8 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
 
         for (stroke in currentScaledStrokes.subList(0, currentStroke))
             drawCanvas.addPath(stroke)
+
+        refreshState()
 
         //setupDebug()
     }
@@ -231,16 +233,14 @@ class WritingTestFragment : Fragment(), CoroutineScope, TestFragment {
     }
 
     private fun onAnswerDone(correct: Boolean) {
+        if (finished)
+            return
+
+        finished = true
         if (correct)
             testFragmentHolder.onAnswer(null, Certainty.SURE, null)
         else
             testFragmentHolder.onAnswer(null, Certainty.DONTKNOW, null)
-
-        currentStroke = currentStrokes.size
-
-        drawCanvas.clearCanvas()
-        for (stroke in currentScaledStrokes)
-            drawCanvas.addPath(stroke)
 
         refreshState()
     }

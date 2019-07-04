@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,7 +17,6 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.AttrRes
-import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NavUtils
@@ -71,6 +69,8 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        title = getString(testType.toName())
 
         mainCoordLayout = coordinatorLayout {
             verticalLayout {
@@ -211,7 +211,7 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
                 else
                     when (testType) {
                         TestType.WORD_TO_READING, TestType.WORD_TO_MEANING, TestType.KANJI_TO_READING, TestType.KANJI_TO_MEANING, TestType.READING_TO_WORD, TestType.MEANING_TO_WORD, TestType.READING_TO_KANJI, TestType.MEANING_TO_KANJI, TestType.HIRAGANA_TO_ROMAJI, TestType.ROMAJI_TO_HIRAGANA, TestType.KATAKANA_TO_ROMAJI, TestType.ROMAJI_TO_KATAKANA -> QuizTestFragment.newInstance()
-                        TestType.HIRAGANA_WRITING, TestType.KATAKANA_WRITING, TestType.KANJI_WRITING -> WritingTestFragment.newInstance()
+                        TestType.HIRAGANA_DRAWING, TestType.KATAKANA_DRAWING, TestType.KANJI_DRAWING -> DrawingTestFragment.newInstance()
                         TestType.KANJI_COMPOSITION -> CompositionTestFragment.newInstance()
                         TestType.HIRAGANA_TO_ROMAJI_TEXT, TestType.KATAKANA_TO_ROMAJI_TEXT -> {
                             val fastTextInput = PreferenceManager.getDefaultSharedPreferences(this@TestActivity).getBoolean("fast_text_input", false)
@@ -338,6 +338,11 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
                     showItemInDict(wrong.contents as Word)
                 }
             }
+            lastWrongItemText.setOnLongClickListener {
+                if (probabilityData != null)
+                    showItemProbabilityData(this, wrong.text, probabilityData)
+                true
+            }
         } else {
             lastWrongItemBundle.visibility = View.GONE
         }
@@ -355,6 +360,11 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
                     showItemInDict(correct.contents as Word)
                 }
             }
+            lastItemText.setOnLongClickListener {
+                if (probabilityData != null)
+                    showItemProbabilityData(this, correct.text, probabilityData)
+                true
+            }
         } else {
             lastItemBundle.visibility = View.GONE
         }
@@ -368,11 +378,6 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
         }
 
         lastDescription.text = correct.description
-        lastItemText.setOnLongClickListener {
-            if (probabilityData != null)
-                showItemProbabilityData(this, correct.text, probabilityData)
-            true
-        }
     }
 
     private fun addGoodAnswerToHistory(correct: Item, probabilityData: TestEngine.DebugData?, refresh: Boolean) {
