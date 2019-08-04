@@ -73,7 +73,7 @@
     <string name="initializing_kanji_db">Initializing database</string>
     <string name="autoselecting_words">Automatically selecting words from selected kanji</string>
     <string name="failed_to_init_db">Failed to initialize database: %1$s</string>
-    <string name="debug_info" translatable="false">Days since known: %1$.1f\nLong score: %2$.2f\nLong weight: %3$.2f\nShort score: %4$.2f\nShort weight: %5$.2f\nShort coefficient: %6$.2f\nLong coefficient: %7$.2f\nFinal weight: %8$.2f\nTotal weight: %9$.2f\nNew short score: %10$.2f\nNew long score: %11$.2f</string>
+    <string name="debug_info" translatable="false">Days since known: %1$.1f\nLong score: %2$.2f\nLong weight: %3$.2f\nShort score: %4$.2f\nShort weight: %5$.2f\nShort coefficient: %6$.2f\nLong coefficient: %7$.2f\nFinal weight: %8$.2f\nTotal weight: %9$.2f\nMin days since asked: %10$.1f\nNew short score: %11$.2f\nNew long score: %12$.2f</string>
     <string name="info_button">Show details</string>
     <string name="next">Next</string>
     <string name="hint">Hint</string>
@@ -98,7 +98,7 @@
     <string name="word_title">Vocabulary</string>
 
     <string name="title_activity_main_settings">Settings</string>
-    <string name="pref_cat_appearance">Appearance</string>
+    <string name="pref_cat_appearance">Appearance and behavior</string>
     <string name="pref_cat_language">Language</string>
     <string name="pref_cat_classification">Classification</string>
     <string name="pref_cat_about">About</string>
@@ -114,6 +114,9 @@
     <string name="kanji_class_rtk6" translatable="false">Remembering The Kanji (6th edition)</string>
     <string name="use_custom_font">Use a custom font</string>
     <string name="pick_custom_font">Pick a custom Japanese font</string>
+    <string name="single_button_off_summary">Two buttons \"sure\" and \"maybe\" will appear</string>
+    <string name="single_button_on_summary">Long pressing an answer will validate it as \"maybe\"</string>
+    <string name="single_button_mode">Single button mode</string>
     <string name="failed_to_load_font">Failed to load custom font: %s</string>
     <string name="failed_to_load_resource">Failed to load resource: %s</string>
 
@@ -121,28 +124,31 @@
     <string name="about_text"><![CDATA[
         <p>Kakugo is a Japanese learning app. Version %1$s (%2$d).</p>
 
-        <p>It is open-source and available on <a href="https://github.com/blastrock/kakugo/">github</a>.<p>
+        <p>It is open-source and available on <a href="https://github.com/blastrock/kakugo/">github</a> under the GPLv3 license.</p>
 
-        <p>The kanji dictionary is based on <a href="http://www.edrdg.org/kanjidic/kanjidic.html">kanjidic</a>.<p>
-        <p>The vocabulary dictionary is based on <a href="http://www.edrdg.org/jmdict/j_jmdict.html">JMdict</a>.<p>
-        <p>The kanji similarity data comes from <a href="http://lars.yencken.org/datasets/phd/">a study from Dr. Lars Yencken</a>.<p>
-        <p>The kanji composition and drawing data comes from <a href="https://kanjivg.tagaini.net/">KanjiVG</a>.<p>
+        <p>The kanji dictionary is based on <a href="http://www.edrdg.org/kanjidic/kanjidic.html">kanjidic</a>.</p>
+        <p>The vocabulary dictionary is based on <a href="http://www.edrdg.org/jmdict/j_jmdict.html">JMdict</a>.</p>
+        <p>The kanji similarity data comes from <a href="http://lars.yencken.org/datasets/phd/">a study from Dr. Lars Yencken</a>.</p>
+        <p>The kanji composition and drawing data comes from <a href="https://kanjivg.tagaini.net/">KanjiVG</a>.</p>
         <p>The app icon font is <a href="https://www.freejapanesefont.com/nagayama-kai-calligraphy-font-download/">Nagayama Kai<a>.</p>
         <p>The app title font is <a href="https://www.dafont.com/fonters.font">Fonters<a>.</p>
+
+        <p>Kakugo  Copyright &#169; 2019  Philippe Daouadi</p>
     ]]></string>
 
     <string name="changelog">Changelog</string>
     <string name="changelog_contents"><![CDATA[
-        <h3>What\'s new in 1.27?</h3>
+        <h3>What\'s new in 1.28?</h3>
+
+        <br/>- Added "single button mode" setting
+        <br/>- The SRS formula was tweaked to focus more on item that are not marked as known
+        <br/>- Kakugo is now licensed under the GPLv3
+
+        <br/><br/><h3>What\'s new in 1.27?</h3>
 
         <br/>- During drawing tests, after clicking on "don\'t know", it is now possible to try to draw the character
         <br/>- The selection screen now shows your best scores instead of just the reading scores
         <br/>- The SRS formula was tweaked a bit to better avoid asking known kanji
-
-        <br/><br/><h3>What\'s new in 1.26.1?</h3>
-
-        <br/>- The dark theme has been redesigned
-        <br/>- Fixed bug that prevented score update for new items
     ]]></string>
 
     <string name="fast_text_input_title">Fast text input</string>

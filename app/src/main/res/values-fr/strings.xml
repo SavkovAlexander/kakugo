@@ -91,7 +91,7 @@
     <string name="enable_dark_theme">Activer le thème sombre</string>
     <string name="settings"><font size="30">設定</font>\nPARAMÈTRES</string>
     <string name="title_activity_main_settings">Paramètres</string>
-    <string name="pref_cat_appearance">Apparance</string>
+    <string name="pref_cat_appearance">Apparance et comportement</string>
     <string name="pref_cat_language">Langue</string>
     <string name="pref_cat_classification">Classification</string>
     <string name="pref_cat_about">À propos</string>
@@ -101,6 +101,9 @@
     <string name="kanji_classification">Classification des kanji</string>
     <string name="use_custom_font">Utiliser une police de caractères personalisée</string>
     <string name="pick_custom_font">Sélectionner une police de caractères japonaise</string>
+    <string name="single_button_off_summary">Deux boutons \"sûr\" et \"pas sûr\" vont apparaitre</string>
+    <string name="single_button_on_summary">Une pression longue sur une réponse la validera en \"pas sûr\"</string>
+    <string name="single_button_mode">Mode bouton unique</string>
     <string name="failed_to_load_font">Impossible de charger la police: %s</string>
     <string name="failed_to_load_resource">Impossible de charger la ressource: %s</string>
 
@@ -108,27 +111,30 @@
     <string name="about_text"><![CDATA[
         <p>Kakugo est une application pour apprendre le Japonais. Version %1$s (%2$d).</p>
 
-        <p>Elle est open-source et disponible sur <a href="https://github.com/blastrock/kakugo/">github</a>.<p>
+        <p>Elle est open-source et disponible sur <a href="https://github.com/blastrock/kakugo/">github</a> sous la licence GPLv3.</p>
 
-        <p>Le dictionnaire de kanji est basé sur <a href="http://www.edrdg.org/kanjidic/kanjidic.html">kanjidic</a>.<p>
-        <p>Le dictionnaire de vocabulaire est basé sur <a href="http://www.edrdg.org/jmdict/j_jmdict.html">JMdict</a>.<p>
-        <p>Les données de similarité des kanji viennent d&apos;<a href="http://lars.yencken.org/datasets/phd/">une étude du Dr. Lars Yencken</a>.<p>
-        <p>Les données de composition et de dessin de kanji viennent de <a href="https://kanjivg.tagaini.net/">KanjiVG</a>.<p>
+        <p>Le dictionnaire de kanji est basé sur <a href="http://www.edrdg.org/kanjidic/kanjidic.html">kanjidic</a>.</p>
+        <p>Le dictionnaire de vocabulaire est basé sur <a href="http://www.edrdg.org/jmdict/j_jmdict.html">JMdict</a>.</p>
+        <p>Les données de similarité des kanji viennent d&apos;<a href="http://lars.yencken.org/datasets/phd/">une étude du Dr. Lars Yencken</a>.</p>
+        <p>Les données de composition et de dessin de kanji viennent de <a href="https://kanjivg.tagaini.net/">KanjiVG</a>.</p>
         <p>La police de caractères de l'icône de l'application est <a href="https://www.freejapanesefont.com/nagayama-kai-calligraphy-font-download/">Nagayama Kai<a>.</p>
         <p>La police de caractères du titres de l'application est <a href="https://www.dafont.com/fonters.font">Fonters<a>.</p>
+
+        <p>Kakugo  Copyright &#169; 2019  Philippe Daouadi</p>
     ]]></string>
 
     <string name="changelog">Changelog</string>
     <string name="changelog_contents"><![CDATA[
-        <h3>Nouveautés en 1.27</h3>
+        <h3>Nouveautés en 1.28</h3>
+
+        <br/>- Ajout de l\'option "Mode bouton unique"
+        <br/>- La formule de SRS à été ajustée pour se concentrer plus sur les éléments qui ne sont pas marqués comme connus
+        <br/>- Kakugo est maintenant sous license GPLv3
+
+        <br/><br/><h3>Nouveautés en 1.27</h3>
 
         <br/>- Pendant les tests de dessin, après avoir cliqué sur "ne sait pas", il est maintenant possible de s\'entrainer à dessiner le caractère
         <br/>- Les écrans de sélection montrent maintenant vos meilleurs scores au lieu des scores de lecture uniquement
         <br/>- La formule de SRS à été ajustée pour mieux éviter d'interroger l'utilisateur sur des kanji connus
-
-        <br/><br/><h3>Nouveautés en 1.26.1</h3>
-
-        <br/>- Le thème sombre a été retravaillé
-        <br/>- Correction du bug empêchant la mise à jour des scores pour les nouveaux éléments
     ]]></string>
 </resources>

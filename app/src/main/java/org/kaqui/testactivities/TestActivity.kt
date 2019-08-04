@@ -28,14 +28,16 @@ import androidx.fragment.app.transaction
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.support.v4.nestedScrollView
 import org.kaqui.*
 import org.kaqui.model.*
+import kotlin.coroutines.CoroutineContext
 
-class TestActivity : BaseActivity(), TestFragmentHolder {
+class TestActivity : BaseActivity(), TestFragmentHolder, CoroutineScope {
     companion object {
         private const val TAG = "TestActivity"
     }
@@ -67,8 +69,14 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
     override val testType
         get() = intent.extras!!.getSerializable("test_type") as TestType
 
+    private lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        job = Job()
 
         title = getString(testType.toName())
 
@@ -235,6 +243,11 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
         statsFragment.updateStats(testEngine.itemView)
     }
 
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         testEngine.saveState(outState)
         super.onSaveInstanceState(outState)
@@ -291,6 +304,11 @@ class TestActivity : BaseActivity(), TestFragmentHolder {
         testEngine.prepareNewQuestion()
         testFragment.startNewQuestion()
         testFragment.refreshQuestion()
+        testFragment.setSensible(false)
+        launch(job) {
+            delay(300)
+            testFragment.setSensible(true)
+        }
     }
 
     private fun updateSessionScore() {

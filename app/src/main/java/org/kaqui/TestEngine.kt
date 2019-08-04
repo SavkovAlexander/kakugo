@@ -71,11 +71,11 @@ class TestEngine(
     private val lastQuestionsIds = ArrayDeque<Int>()
 
     val answerCount
-        get () = getAnswerCount(testType)
+        get() = getAnswerCount(testType)
 
     fun loadState(savedInstanceState: Bundle) {
-        currentQuestion = getItem(db, savedInstanceState.getInt("question"))
-        currentAnswers = savedInstanceState.getIntArray("answers")!!.map { getItem(db, it) }
+        currentQuestion = getItem(savedInstanceState.getInt("question"))
+        currentAnswers = savedInstanceState.getIntArray("answers")!!.map { getItem(it) }
         correctCount = savedInstanceState.getInt("correctCount")
         questionCount = savedInstanceState.getInt("questionCount")
         unserializeHistory(savedInstanceState.getByteArray("history")!!)
@@ -127,10 +127,16 @@ class TestEngine(
                 Log.v(TAG, "Couldn't pick a question")
         }
 
-        return PickedQuestion(getItem(db, question.itemId), question, totalWeight)
+        return PickedQuestion(getItem(question.itemId), question, totalWeight)
     }
 
-    private fun pickAnswers(db: Database, ids: List<SrsCalculator.ProbabilityData>, currentQuestion: Item): List<Item> {
+    private fun pickAnswers(db: Database, ids: List<SrsCalculator.ProbabilityData>, currentQuestion: Item): List<Item> =
+            when (testType) {
+                TestType.KANJI_COMPOSITION -> pickCompositionAnswers(db, ids, currentQuestion)
+                else -> pickNormalTestAnswers(db, ids, currentQuestion)
+            }
+
+    private fun pickNormalTestAnswers(db: Database, ids: List<SrsCalculator.ProbabilityData>, currentQuestion: Item): List<Item> {
         val similarItemIds = currentQuestion.similarities.map { it.id }.filter { itemView.isItemEnabled(it) }
         val similarItems =
                 if (similarItemIds.size >= answerCount - 1)
@@ -140,12 +146,45 @@ class TestEngine(
 
         val additionalAnswers = pickRandom(ids.map { it.itemId }, answerCount - 1 - similarItems.size, setOf(currentQuestion.id) + similarItems)
 
-        val currentAnswers = ((additionalAnswers + similarItems).map { getItem(db, it) } + listOf(currentQuestion)).toMutableList()
+        val currentAnswers = ((additionalAnswers + similarItems).map { getItem(it) } + listOf(currentQuestion)).toMutableList()
         if (currentAnswers.size != answerCount)
             Log.wtf(TAG, "Got ${currentAnswers.size} answers instead of $answerCount")
         currentAnswers.shuffle()
 
         return currentAnswers
+    }
+
+    private fun pickCompositionAnswers(db: Database, ids: List<SrsCalculator.ProbabilityData>, currentQuestion: Item): List<Item> {
+        val knowledgeType = getKnowledgeType(testType)
+
+        val currentKanji = currentQuestion.contents as Kanji
+        val questionPartsIds = currentKanji.parts.map { it.id }
+        val possiblePartsIds = db.getCompositionAnswerIds(currentQuestion.id) - currentQuestion.id
+        val similarItemIds = currentQuestion.similarities.map { it.id }.filter { itemView.isItemEnabled(it) } - currentQuestion.id
+        val restOfAnswers = ids.map { it.itemId } - currentQuestion.id
+
+        Log.d(TAG, "Parts of ${currentKanji.kanji}: ${questionPartsIds.map { (db.getKanji(it, knowledgeType).contents as Kanji).kanji }}")
+        Log.d(TAG, "Possible parts for ${currentKanji.kanji}: ${possiblePartsIds.map { (db.getKanji(it, knowledgeType).contents as Kanji).kanji }}")
+
+        val currentAnswers = sampleCompositionAnswers(listOf(possiblePartsIds, similarItemIds, restOfAnswers), questionPartsIds).map { db.getKanji(it, knowledgeType) }.toMutableList()
+        if (currentAnswers.size != answerCount)
+            Log.wtf(TAG, "Got ${currentAnswers.size} answers instead of $answerCount")
+        currentAnswers.shuffle()
+
+        return currentAnswers
+    }
+
+    private fun sampleCompositionAnswers(possibleAnswers: List<List<Int>>, currentAnswers: List<Int>): List<Int> {
+        if (possibleAnswers.isEmpty() || currentAnswers.size == answerCount)
+            return currentAnswers
+
+        val currentList = possibleAnswers[0] - currentAnswers
+
+        return if (currentList.size <= answerCount - currentAnswers.size) {
+            sampleCompositionAnswers(possibleAnswers.drop(1), currentAnswers + currentList)
+        } else {
+            currentAnswers + pickRandom(currentList, answerCount - currentAnswers.size, setOf())
+        }
     }
 
     private fun addIdToLastQuestions(id: Int) {
@@ -155,7 +194,7 @@ class TestEngine(
     }
 
     fun markAnswer(certainty: Certainty, wrong: Item? = null) {
-        val minLastCorrect = itemView.getLastCorrectFirstDecile()
+        val minLastCorrect = itemView.getMinLastCorrect()
 
         if (certainty == Certainty.DONTKNOW) {
             val scoreUpdate = SrsCalculator.getScoreUpdate(minLastCorrect, currentQuestion, Certainty.DONTKNOW)
@@ -243,13 +282,13 @@ class TestEngine(
             val type = parcel.readByte()
             when (type.toInt()) {
                 0 -> {
-                    addGoodAnswerToHistory(getItem(db, parcel.readInt()), iteration == count - 1)
+                    addGoodAnswerToHistory(getItem(parcel.readInt()), iteration == count - 1)
                 }
                 1 -> {
-                    addUnknownAnswerToHistory(getItem(db, parcel.readInt()), iteration == count - 1)
+                    addUnknownAnswerToHistory(getItem(parcel.readInt()), iteration == count - 1)
                 }
                 2 -> {
-                    addWrongAnswerToHistory(getItem(db, parcel.readInt()), getItem(db, parcel.readInt()), iteration == count - 1)
+                    addWrongAnswerToHistory(getItem(parcel.readInt()), getItem(parcel.readInt()), iteration == count - 1)
                 }
             }
         }
@@ -257,7 +296,7 @@ class TestEngine(
         parcel.recycle()
     }
 
-    private fun getItem(db: Database, id: Int): Item =
+    private fun getItem(id: Int): Item =
             itemView.getItem(id)
 
     val itemView: LearningDbView

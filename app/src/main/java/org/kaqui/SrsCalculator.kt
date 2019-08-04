@@ -15,7 +15,7 @@ class SrsCalculator {
 
     data class DebugParams(var probaParamsStage1: ProbaParamsStage1, var probaParamsStage2: ProbaParamsStage2)
 
-    data class ScoreUpdate(val itemId: Int, val shortScore: Float, val longScore: Float, val lastCorrect: Long?)
+    data class ScoreUpdate(val itemId: Int, val shortScore: Float, val longScore: Float, val lastCorrect: Long, val minLastCorrect: Int)
 
     private data class Stage1Stats(@JvmField val totalShortWeight: Double, @JvmField val totalLongWeight: Double, @JvmField val countUnknown: Int)
 
@@ -23,8 +23,8 @@ class SrsCalculator {
         private const val TAG = "SrsCalculator"
 
         private const val MIN_PROBA_SHORT_UNKNOWN = 0.2
-        private const val MAX_PROBA_SHORT_UNKNOWN = 0.8
-        private const val MAX_COUNT_SHORT_UNKNOWN = 50
+        private const val MAX_PROBA_SHORT_UNKNOWN = 0.9
+        private const val MAX_COUNT_SHORT_UNKNOWN = 30
 
         fun fillProbalities(items: List<ProbabilityData>, minLastCorrect: Int): Pair<List<ProbabilityData>, DebugParams> {
             val now = Calendar.getInstance().timeInMillis / 1000
@@ -101,7 +101,7 @@ class SrsCalculator {
                         item.lastCorrect
                     else
                         now
-            val daysSinceCorrect = (now - lastCorrect) / 3600.0 / 24.0
+            val daysSinceCorrect = secondsToDays(now - lastCorrect)
             // long score goes down by one half of the distance to the target score
             // and it goes up by one half of that distance prorated by the time since the last
             // correct answer
@@ -124,7 +124,7 @@ class SrsCalculator {
             Log.v(TAG, "Short score of $item going from $previousShortScore to $newShortScore")
             Log.v(TAG, "Long score of $item going from $previousLongScore to $newLongScore")
 
-            return ScoreUpdate(item.id, newShortScore.toFloat(), newLongScore.toFloat(), now)
+            return ScoreUpdate(item.id, newShortScore.toFloat(), newLongScore.toFloat(), now, minLastCorrect)
         }
 
         private fun certaintyToWeight(certainty: Certainty): Double =
