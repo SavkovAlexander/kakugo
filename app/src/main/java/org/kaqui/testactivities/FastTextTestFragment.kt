@@ -182,4 +182,8 @@ class FastTextTestFragment : Fragment(), TestFragment {
             }
         }
     }
+
+    override fun setSensible(e: Boolean) {
+        // do nothing
+    }
 }
