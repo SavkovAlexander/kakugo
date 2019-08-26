@@ -15,6 +15,9 @@
     <string name="autoselect_from_kanji_short">Auto</string>
     <string name="import_selection">Import kanji selection</string>
     <string name="database_error">Database error</string>
+    <string name="custom_test">Custom test</string>
+    <string name="select_test_types">Select the desired types of questions:</string>
+    <string name="select_at_least_one_type">You must select at least one type of question.</string>
 
     <string name="hiragana_to_romaji">Hiragana to romaji quiz (ひ→hi)</string>
     <string name="romaji_to_hiragana">Romaji to hiragana (hi→ひ)</string>
@@ -138,17 +141,16 @@
 
     <string name="changelog">Changelog</string>
     <string name="changelog_contents"><![CDATA[
-        <h3>What\'s new in 1.28?</h3>
+        <h3>What\'s new in 1.29?</h3>
+
+        <br/>- Added new custom test mode for kanji
+        <br/>- Reworked kanji composition test
+
+        <br/><br/><h3>What\'s new in 1.28?</h3>
 
         <br/>- Added "single button mode" setting
         <br/>- The SRS formula was tweaked to focus more on item that are not marked as known
         <br/>- Kakugo is now licensed under the GPLv3
-
-        <br/><br/><h3>What\'s new in 1.27?</h3>
-
-        <br/>- During drawing tests, after clicking on "don\'t know", it is now possible to try to draw the character
-        <br/>- The selection screen now shows your best scores instead of just the reading scores
-        <br/>- The SRS formula was tweaked a bit to better avoid asking known kanji
     ]]></string>
 
     <string name="fast_text_input_title">Fast text input</string>

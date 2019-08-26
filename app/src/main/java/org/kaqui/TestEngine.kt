@@ -8,7 +8,7 @@ import java.util.*
 
 class TestEngine(
         private val db: Database,
-        private val testType: TestType,
+        private val testTypes: List<TestType>,
         private val goodAnswerCallback: (correct: Item, probabilityData: DebugData?, refresh: Boolean) -> Unit,
         private val wrongAnswerCallback: (correct: Item, probabilityData: DebugData?, wrong: Item, refresh: Boolean) -> Unit,
         private val unknownAnswerCallback: (correct: Item, probabilityData: DebugData?, refresh: Boolean) -> Unit) {
@@ -56,6 +56,7 @@ class TestEngine(
 
     data class PickedQuestion(val item: Item, val probabilityData: SrsCalculator.ProbabilityData, val totalWeight: Double)
 
+    lateinit var testType: TestType
     lateinit var currentQuestion: Item
         private set
     var currentDebugData: DebugData? = null
@@ -74,6 +75,7 @@ class TestEngine(
         get() = getAnswerCount(testType)
 
     fun loadState(savedInstanceState: Bundle) {
+        testType = savedInstanceState.getSerializable("testType") as TestType
         currentQuestion = getItem(savedInstanceState.getInt("question"))
         currentAnswers = savedInstanceState.getIntArray("answers")!!.map { getItem(it) }
         correctCount = savedInstanceState.getInt("correctCount")
@@ -82,6 +84,7 @@ class TestEngine(
     }
 
     fun saveState(outState: Bundle) {
+        outState.putSerializable("testType", testType)
         outState.putInt("question", currentQuestion.id)
         outState.putIntArray("answers", currentAnswers.map { it.id }.toIntArray())
         outState.putInt("correctCount", correctCount)
@@ -89,8 +92,10 @@ class TestEngine(
         outState.putByteArray("history", serializeHistory())
     }
 
-    fun prepareNewQuestion(): List<SrsCalculator.ProbabilityData> {
-        val (ids, debugParams) = SrsCalculator.fillProbalities(itemView.getEnabledItemsAndScores(), itemView.getLastCorrectFirstDecile())
+    fun prepareNewQuestion() {
+        testType = testTypes[Random().nextInt(testTypes.size)]
+
+        val (ids, debugParams) = SrsCalculator.fillProbalities(itemView.getEnabledItemsAndScores(), itemView.getLastAskedFirstDecile())
         if (ids.size < answerCount) {
             Log.wtf(TAG, "Enabled items ${ids.size} must at least be $answerCount")
             throw RuntimeException("Too few items selected")
@@ -103,8 +108,6 @@ class TestEngine(
         currentAnswers = pickAnswers(db, ids, currentQuestion)
 
         addIdToLastQuestions(currentQuestion.id)
-
-        return ids
     }
 
     private fun pickQuestion(db: Database, ids: List<SrsCalculator.ProbabilityData>): PickedQuestion {
@@ -159,14 +162,15 @@ class TestEngine(
 
         val currentKanji = currentQuestion.contents as Kanji
         val questionPartsIds = currentKanji.parts.map { it.id }
-        val possiblePartsIds = db.getCompositionAnswerIds(currentQuestion.id) - currentQuestion.id
-        val similarItemIds = currentQuestion.similarities.map { it.id }.filter { itemView.isItemEnabled(it) } - currentQuestion.id
+        val similarPartsIds = db.getSimilarCompositionAnswerIds(currentQuestion.id) - currentQuestion.id
+        val otherPartsIds = db.getOtherCompositionAnswerIds(currentQuestion.id) - currentQuestion.id
         val restOfAnswers = ids.map { it.itemId } - currentQuestion.id
 
-        Log.d(TAG, "Parts of ${currentKanji.kanji}: ${questionPartsIds.map { (db.getKanji(it, knowledgeType).contents as Kanji).kanji }}")
-        Log.d(TAG, "Possible parts for ${currentKanji.kanji}: ${possiblePartsIds.map { (db.getKanji(it, knowledgeType).contents as Kanji).kanji }}")
+        Log.d(TAG, "Parts of ${currentKanji.kanji}: ${questionPartsIds.map { it.asUnicodeCodePoint() }}")
+        Log.d(TAG, "Similar parts for ${currentKanji.kanji}: ${similarPartsIds.map { it.asUnicodeCodePoint() }}")
+        Log.d(TAG, "Other parts for ${currentKanji.kanji}: ${otherPartsIds.map { it.asUnicodeCodePoint() }}")
 
-        val currentAnswers = sampleCompositionAnswers(listOf(possiblePartsIds, similarItemIds, restOfAnswers), questionPartsIds).map { db.getKanji(it, knowledgeType) }.toMutableList()
+        val currentAnswers = sampleCompositionAnswers(listOf(similarPartsIds, otherPartsIds, restOfAnswers), questionPartsIds).map { db.getKanji(it, knowledgeType) }.toMutableList()
         if (currentAnswers.size != answerCount)
             Log.wtf(TAG, "Got ${currentAnswers.size} answers instead of $answerCount")
         currentAnswers.shuffle()
@@ -194,7 +198,7 @@ class TestEngine(
     }
 
     fun markAnswer(certainty: Certainty, wrong: Item? = null) {
-        val minLastCorrect = itemView.getMinLastCorrect()
+        val minLastCorrect = itemView.getMinLastAsked()
 
         if (certainty == Certainty.DONTKNOW) {
             val scoreUpdate = SrsCalculator.getScoreUpdate(minLastCorrect, currentQuestion, Certainty.DONTKNOW)

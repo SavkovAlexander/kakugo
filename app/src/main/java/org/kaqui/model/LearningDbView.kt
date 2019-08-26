@@ -91,29 +91,31 @@ class LearningDbView(
         }
     }
 
-    fun getMinLastCorrect(): Int = getLastCorrectFrom(0)
+    fun getMinLastAsked(): Int = getLastAskedFrom(0)
 
-    fun getLastCorrectFirstDecile(): Int {
+    fun getLastAskedFirstDecile(): Int {
         val count = database.query(tableName, arrayOf("COUNT(*)"), "$filter AND enabled = 1", null, null, null, null).use { cursor ->
             cursor.moveToFirst()
             cursor.getInt(0)
         }
         val decile1 = count / 10
-        return getLastCorrectFrom(decile1)
+        return getLastAskedFrom(decile1)
     }
 
-    private fun getLastCorrectFrom(from: Int): Int {
+    private fun getLastAskedFrom(from: Int): Int {
         // I couldn't find how sqlite handles null values in order by, so I use ifnull there too
         database.rawQuery("""
-            SELECT ifnull(s.last_correct, 0)
+            SELECT s.last_correct
             FROM $tableName
             LEFT JOIN ${Database.ITEM_SCORES_TABLE_NAME} s ON $tableName.id = s.id AND s.type = ${knowledgeType!!.value}
-            WHERE $filter AND $tableName.enabled = 1
-            ORDER BY ifnull(s.last_correct, 0) ASC
+            WHERE $filter AND $tableName.enabled = 1 AND s.last_correct IS NOT NULL
+            ORDER BY s.last_correct ASC
             LIMIT $from, 1
         """, null).use { cursor ->
-            cursor.moveToFirst()
-            return cursor.getInt(0)
+            if (cursor.moveToFirst())
+                return cursor.getInt(0)
+            else
+                return 0
         }
     }
 
@@ -130,11 +132,10 @@ class LearningDbView(
         cv.put("type", knowledgeType!!.value)
         cv.put("short_score", scoreUpdate.shortScore)
         cv.put("long_score", scoreUpdate.longScore)
-        if (scoreUpdate.lastCorrect != null)
-            cv.put("last_correct", scoreUpdate.lastCorrect)
+        if (scoreUpdate.lastAsked != null)
+            cv.put("last_correct", scoreUpdate.lastAsked)
         database.insertWithOnConflict(Database.ITEM_SCORES_TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE)
     }
-
 
     data class Stats(val bad: Int, val meh: Int, val good: Int, val disabled: Int)
 
@@ -165,7 +166,11 @@ class LearningDbView(
                     selectionArgsBase
 
         database.rawQuery("""
-            WITH stats AS (
+            SELECT
+                SUM(case when stats_score BETWEEN 0.0 AND $BAD_WEIGHT then 1 else 0 end),
+                SUM(case when stats_score BETWEEN $BAD_WEIGHT AND $GOOD_WEIGHT then 1 else 0 end),
+                SUM(case when stats_score BETWEEN $GOOD_WEIGHT AND 1.0 then 1 else 0 end)
+            FROM (
                 SELECT MAX(ifnull(s.short_score, 0.0)) as stats_score
                 FROM $tableName
                 LEFT JOIN ${Database.ITEM_SCORES_TABLE_NAME} s
@@ -176,11 +181,6 @@ class LearningDbView(
                     $andWhereClause
                 GROUP BY $tableName.id
             )
-            SELECT
-                SUM(case when stats_score BETWEEN 0.0 AND $BAD_WEIGHT then 1 else 0 end),
-                SUM(case when stats_score BETWEEN $BAD_WEIGHT AND $GOOD_WEIGHT then 1 else 0 end),
-                SUM(case when stats_score BETWEEN $GOOD_WEIGHT AND 1.0 then 1 else 0 end)
-            FROM stats
         """, selectionArgs).use { cursor ->
             cursor.moveToNext()
             return Triple(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2))

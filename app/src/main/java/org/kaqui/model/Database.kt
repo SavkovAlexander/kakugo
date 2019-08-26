@@ -18,10 +18,10 @@ class Database private constructor(context: Context, private val database: SQLit
     }
 
     fun getHiraganaView(knowledgeType: KnowledgeType? = null) =
-            LearningDbView(database, KANAS_TABLE_NAME, knowledgeType, filter = "$KANAS_TABLE_NAME.id BETWEEN ${HiraganaRange.start} AND ${HiraganaRange.endInclusive}", itemGetter = this::getKana)
+            LearningDbView(database, KANAS_TABLE_NAME, knowledgeType, filter = "$KANAS_TABLE_NAME.id BETWEEN ${HiraganaRange.first} AND ${HiraganaRange.last}", itemGetter = this::getKana)
 
     fun getKatakanaView(knowledgeType: KnowledgeType? = null) =
-            LearningDbView(database, KANAS_TABLE_NAME, knowledgeType, filter = "$KANAS_TABLE_NAME.id BETWEEN ${KatakanaRange.start} AND ${KatakanaRange.endInclusive}", itemGetter = this::getKana)
+            LearningDbView(database, KANAS_TABLE_NAME, knowledgeType, filter = "$KANAS_TABLE_NAME.id BETWEEN ${KatakanaRange.first} AND ${KatakanaRange.last}", itemGetter = this::getKana)
 
     fun getKanjiView(knowledgeType: KnowledgeType? = null, classifier: Classifier? = null): LearningDbView =
             LearningDbView(database, KANJIS_TABLE_NAME, knowledgeType, filter = "radical = 0", classifier = classifier, itemGetter = this::getKanji, itemSearcher = this::searchKanji)
@@ -29,7 +29,7 @@ class Database private constructor(context: Context, private val database: SQLit
     fun getWordView(knowledgeType: KnowledgeType? = null, classifier: Classifier? = null): LearningDbView =
             LearningDbView(database, WORDS_TABLE_NAME, knowledgeType, classifier = classifier, itemGetter = this::getWord, itemSearcher = this::searchWord)
 
-    fun getCompositionAnswerIds(kanjiId: Int): List<Int> {
+    fun getOtherCompositionAnswerIds(kanjiId: Int): List<Int> {
         database.rawQuery("""
             SELECT c3.id_kanji2
             FROM $KANJIS_COMPOSITION_TABLE_NAME c1
@@ -43,6 +43,22 @@ class Database private constructor(context: Context, private val database: SQLit
             JOIN $KANJIS_TABLE_NAME k ON c.id_kanji1 = k.id AND k.enabled = 1
             WHERE c.id_kanji2 = ?
             """, arrayOf(kanjiId.toString(), kanjiId.toString())).use { cursor ->
+            val ret = mutableListOf<Int>()
+            while (cursor.moveToNext()) {
+                ret.add(cursor.getInt(0))
+            }
+            return ret
+        }
+    }
+
+    fun getSimilarCompositionAnswerIds(kanjiId: Int): List<Int> {
+        database.rawQuery("""
+            SELECT DISTINCT c.id_kanji2
+            FROM $SIMILAR_ITEMS_TABLE_NAME s
+            JOIN $KANJIS_TABLE_NAME sk ON s.id_item2 = sk.id AND sk.enabled = 1
+            JOIN $KANJIS_COMPOSITION_TABLE_NAME c ON c.id_kanji1 = s.id_item2
+            WHERE s.id_item1 = ?
+            """, arrayOf(kanjiId.toString())).use { cursor ->
             val ret = mutableListOf<Int>()
             while (cursor.moveToNext()) {
                 ret.add(cursor.getInt(0))
@@ -125,7 +141,7 @@ class Database private constructor(context: Context, private val database: SQLit
             contents.uniqueRomaji = cursor.getString(5)
             item.shortScore = cursor.getDouble(1)
             item.longScore = cursor.getDouble(2)
-            item.lastCorrect = cursor.getLong(3)
+            item.lastAsked = cursor.getLong(3)
             item.enabled = cursor.getInt(4) != 0
         }
         return item
@@ -165,23 +181,10 @@ class Database private constructor(context: Context, private val database: SQLit
             contents.jlptLevel = cursor.getInt(0)
             item.shortScore = cursor.getDouble(1)
             item.longScore = cursor.getDouble(2)
-            item.lastCorrect = cursor.getLong(3)
+            item.lastAsked = cursor.getLong(3)
             item.enabled = cursor.getInt(4) != 0
         }
         return item
-    }
-
-    fun getEnabledWholeKanjiRatio(): Float {
-        val wholeKanjis = database.query(KANJIS_TABLE_NAME, arrayOf("COUNT(*)"), "enabled = 1 AND part_count = 1", null, null, null, null).use { cursor ->
-            cursor.moveToFirst()
-            cursor.getInt(0)
-        }
-        val enabledKanjis = database.query(KANJIS_TABLE_NAME, arrayOf("COUNT(*)"), "enabled = 1", null, null, null, null).use { cursor ->
-            cursor.moveToFirst()
-            cursor.getInt(0)
-        }
-
-        return wholeKanjis.toFloat() / enabledKanjis.toFloat()
     }
 
     fun getWord(id: Int, knowledgeType: KnowledgeType?): Item {
@@ -207,7 +210,7 @@ class Database private constructor(context: Context, private val database: SQLit
                 contents.meanings = cursor.getString(8).split('_')
             item.shortScore = cursor.getDouble(3)
             item.longScore = cursor.getDouble(4)
-            item.lastCorrect = cursor.getLong(5)
+            item.lastAsked = cursor.getLong(5)
             item.enabled = cursor.getInt(6) != 0
             similarityClass = cursor.getInt(7)
         }
