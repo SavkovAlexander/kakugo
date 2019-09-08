@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hiragana"><font size="30">ひらがな</font>\nХИРАГАНА</string>
+    <string name="katakana"><font size="30">カタカナ</font>\nКАТАКАНА</string>
+    <string name="kanji"><font size="30">漢字</font>\nКАНДЗИ</string>
+    <string name="word"><font size="30">語彙</font>\nСЛОВАРЬ</string>
+    <string name="settings"><font size="30">設定</font>\nНАСТРОЙКИ</string>
+    <string name="hiragana_selection">Выбор хираганы</string>
+    <string name="katakana_selection">Выбор катаканы</string>
+    <string name="kanji_selection">Выбор кандзи</string>
+    <string name="word_selection">Выбор слов</string>
+    <string name="select_all">Выбрать всё</string>
+    <string name="select_none">Снять выделение</string>
+    <string name="autoselect_from_kanji">Автоматический выбор слов из выбранных кандзи</string>
+    <string name="autoselect_from_kanji_short">Автоматически</string>
+    <string name="import_selection">Импортировать список кандзи</string>
+    <string name="database_error">Ошибка базы данных</string>
+    <string name="custom_test">Пользовательский тест</string>
+    <string name="select_test_types">Выберите типы вопросов:</string>
+    <string name="select_at_least_one_type">Вы должны выбрать хотя бы один тип вопросов</string>
+
+    <string name="hiragana_to_romaji">Хирагана → ромадзи (ひ→hi)</string>
+    <string name="romaji_to_hiragana">Ромадзи → хирагана (hi→ひ)</string>
+    <string name="hiragana_to_romaji_typing">Хирагана → ромадзи-текст (ひ→hi)</string>
+    <string name="hiragana_drawing">Написание хираганы</string>
+
+    <string name="katakana_to_romaji">Катакана → ромадзи (ヒ→hi)</string>
+    <string name="romaji_to_katakana">Ромадзи → катакана (hi→ヒ)</string>
+    <string name="katakana_to_romaji_typing">Катакана → ромадзи-текст (ヒ→hi)</string>
+    <string name="katakana_drawing">Написание катаканы</string>
+
+    <string name="kanji_to_reading">Кандзи → прочтение (日→ひ)</string>
+    <string name="reading_to_kanji">Прочтение → кандзи (ひ→日)</string>
+    <string name="kanji_to_meaning">Кандзи → значение (日→день)</string>
+    <string name="meaning_to_kanji">Значение → кандзи (день→日)</string>
+    <string name="kanji_composition">Композиция кандзи (休→亻+木)</string>
+    <string name="kanji_drawing">Написание кандзи</string>
+
+    <string name="word_to_reading">Слово → прочтение (日の出→ひので)</string>
+    <string name="reading_to_word">Прочтение → слово (ひので→日の出)</string>
+    <string name="word_to_meaning">Слово → значение (日の出→восход солнца)</string>
+    <string name="meaning_to_word">Значение → слово (восход солнца→日の出)</string>
+
+    <string name="hiragana_to_romaji_title">Хирагана → ромадзи</string>
+    <string name="romaji_to_hiragana_title">Ромадзи → хирагана</string>
+    <string name="hiragana_to_romaji_typing_title">Хирагана → ромадзи-текст</string>
+    <string name="hiragana_drawing_title">Написание хираганы</string>
+
+    <string name="katakana_to_romaji_title">Катакана → ромадзи</string>
+    <string name="romaji_to_katakana_title">Ромадзи → катакана</string>
+    <string name="katakana_to_romaji_typing_title">Катакана → ромадзи-текст</string>
+    <string name="katakana_drawing_title">Написание катаканы</string>
+
+    <string name="kanji_to_reading_title">Кандзи → прочтение</string>
+    <string name="reading_to_kanji_title">Прочтение → кандзи</string>
+    <string name="kanji_to_meaning_title">Кандзи → значение</string>
+    <string name="meaning_to_kanji_title">Значение → кандзи</string>
+    <string name="kanji_composition_title">Композиция кандзи</string>
+    <string name="kanji_drawing_title">Написание кандзи</string>
+
+    <string name="word_to_reading_title">Слово → прочтение</string>
+    <string name="reading_to_word_title">Прочтение → слово</string>
+    <string name="word_to_meaning_title">Слово → значение</string>
+    <string name="meaning_to_word_title">Значение → слово</string>
+
+    <string name="sure">Точно</string>
+    <string name="maybe">Наверное</string>
+    <string name="dont_know">Не знаю</string>
+    <string name="score_string">Текущий счет: %1$d/%2$d</string>
+    <string name="jlpt_search">Поиск</string>
+    <string name="search_kanji_hint">Поиск кандзи&#8230;</string>
+    <string name="confirm_test_stop_title">Завершить сессию</string>
+    <string name="confirm_test_stop_message">Вы уверены, что хотите завершить сессию?</string>
+    <string name="enable_a_few_items">Вы должны выбрать не менее 10 элементов для начала сессии</string>
+    <string name="initializing_kanji_db">Инициализация базы данных</string>
+    <string name="autoselecting_words">Выбор слов по выбранным кандзи</string>
+    <string name="failed_to_init_db">Ошибка инициализация базы данных: %1$s</string>
+    <string name="info_button">Показать детали</string>
+    <string name="next">Далее</string>
+    <string name="hint">Подсказка</string>
+    <string name="save_current_selection">Сохранить текущий список</string>
+    <string name="load_selection">Загрузить список</string>
+    <string name="selection_presentation">%1$s (%2$d элементов)</string>
+    <string name="delete">Удалить</string>
+    <string name="loaded_selection">Список \"%1$s\" загружен</string>
+    <string name="deleted_selection">Список \"%1$s\" удален</string>
+    <string name="saved_selection">Текущий список сохранен как \"%1$s\"</string>
+    <string name="answerDone">Готово</string>
+    <string name="enter_name_of_selection">Введите имя для списка</string>
+    <string name="could_not_import_file">Не удалось импортировать файл: %1$s</string>
+    <string name="import_kanji_help">Эта функция позволяет импортировать список кандзи из файла. Файл должен содержать все импортируемые кандзи в одну строку, без пробелов или других разделителей.</string>
+    <string name="additional_kanji">Дополнительные кандзи</string>
+    <string name="jlpt_level_n">Уровень JLPT %1$s</string>
+    <string name="rtk_index_range">Индексы %1$s+</string>
+    <string name="rtk6_index_range">Индексы %1$s+</string>
+    <string name="search_word_hint">Поиск слова&#8230;</string>
+    <string name="hiragana_title">Хирагана</string>
+    <string name="katakana_title">Катакана</string>
+    <string name="kanji_title">Кандзи</string>
+    <string name="word_title">Словарь</string>
+    <string name="enable_dark_theme">Включить темную тему</string>
+    <string name="title_activity_main_settings">Настройки</string>
+    <string name="pref_cat_appearance">Внешний вид и поведение</string>
+    <string name="pref_cat_language">Язык</string>
+    <string name="pref_cat_classification">Классификация</string>
+    <string name="pref_cat_about">О программе</string>
+    <string name="will_update_later">Обновится после выхода из экрана настроек</string>
+    <string name="dictionary_language">Язык словаря</string>
+    <string name="lang_system_default">Язык системы</string>
+    <string name="kanji_classification">Классификация кандзи</string>
+    <string name="use_custom_font">Использовать пользовательский шрифт</string>
+    <string name="pick_custom_font">Выберите японский шрифт</string>
+    <string name="single_button_off_summary">Появятся кнопки \"Точно\" и \"Наверное\"</string>
+    <string name="single_button_on_summary">Длинное нажатие на ответ отметит его как \"наверное\"</string>
+    <string name="single_button_mode">Режим \"одна кнопка\"</string>
+    <string name="failed_to_load_font">Не удалось загрузить шрифт: %s</string>
+    <string name="failed_to_load_resource">Не удалось загрузить ресурс: %s</string>
+
+    <string name="title_about">О Kakugo</string>
+    <string name="about_text"><![CDATA[
+        <p>Kakugo - приложение для изучения Японского языка. Версия %1$s (%2$d).</p>
+
+        <p>Это открытое программное обеспечение и доступно по ссылке <a href="https://github.com/blastrock/kakugo/">github</a> под лицензией GPLv3.</p>
+
+        <p>Словарь кандзи базируется на <a href="http://www.edrdg.org/kanjidic/kanjidic.html">kanjidic</a>.</p>
+        <p>Список слов базируется на <a href="http://www.edrdg.org/jmdict/j_jmdict.html">JMdict</a>.</p>
+        <p>Данные о схожести кандзи взяты из <a href="http://lars.yencken.org/datasets/phd/">исследования Dr. Lars Yencken</a>.</p>
+        <p>Композиция кандзи и данные о начертании взяты из <a href="https://kanjivg.tagaini.net/">KanjiVG</a>.</p>
+        <p>Шрифт иконки приложения <a href="https://www.freejapanesefont.com/nagayama-kai-calligraphy-font-download/">Nagayama Kai<a>.</p>
+        <p>Шрифт заголовка приложения <a href="https://www.dafont.com/fonters.font">Fonters<a>.</p>
+
+        <p>Kakugo  Copyright &#169; 2019  Philippe Daouadi</p>
+    ]]></string>
+    
+    <string name="changelog">Changelog</string>
+    <string name="changelog_contents"><![CDATA[
+        <h3>What\'s new in 1.30?</h3>
+
+        <br/>- Added new more accurate spaced repetition system
+
+        <br/><br/><h3>What\'s new in 1.29?</h3>
+
+        <br/>- Added new custom test mode for kanji
+        <br/>- Reworked kanji composition test
+    ]]></string>
+</resources>

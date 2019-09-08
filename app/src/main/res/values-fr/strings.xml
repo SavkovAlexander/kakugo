@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="hiragana"><font size="30">ひらがな</font>\nHIRAGANA</string>
+    <string name="katakana"><font size="30">カタカナ</font>\nKATAKANA</string>
+    <string name="kanji"><font size="30">漢字</font>\nKANJI</string>
     <string name="word"><font size="30">語彙</font>\nVOCABULAIRE</string>
     <string name="hiragana_selection">Sélection des hiragana</string>
     <string name="katakana_selection">Sélection des katakana</string>
@@ -90,6 +93,9 @@
     <string name="rtk_index_range">Index %1$s+</string>
     <string name="rtk6_index_range">Index %1$s+</string>
     <string name="search_word_hint">Rechercher un mot&#8230;</string>
+    <string name="hiragana_title">Hiragana</string>
+    <string name="katakana_title">Katakana</string>
+    <string name="kanji_title">Kanji</string>
     <string name="word_title">Vocabulaire</string>
     <string name="enable_dark_theme">Activer le thème sombre</string>
     <string name="settings"><font size="30">設定</font>\nPARAMÈTRES</string>

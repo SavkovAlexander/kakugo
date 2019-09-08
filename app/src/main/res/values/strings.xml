@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Kakugo</string>
-    <string name="hiragana" translatable="false"><font size="30">ひらがな</font>\nHIRAGANA</string>
-    <string name="katakana" translatable="false"><font size="30">カタカナ</font>\nKATAKANA</string>
-    <string name="kanji" translatable="false"><font size="30">漢字</font>\nKANJI</string>
+    <string name="hiragana"><font size="30">ひらがな</font>\nHIRAGANA</string>
+    <string name="katakana"><font size="30">カタカナ</font>\nKATAKANA</string>
+    <string name="kanji"><font size="30">漢字</font>\nKANJI</string>
     <string name="word"><font size="30">語彙</font>\nVOCABULARY</string>
     <string name="settings"><font size="30">設定</font>\nSETTINGS</string>
     <string name="hiragana_selection">Hiragana selection</string>
@@ -95,9 +95,9 @@
     <string name="jlpt_level_n">JLPT level %1$s</string>
     <string name="rtk_index_range">Indexes %1$s+</string>
     <string name="rtk6_index_range">Indexes %1$s+</string>
-    <string name="hiragana_title" translatable="false">Hiragana</string>
-    <string name="katakana_title" translatable="false">Katakana</string>
-    <string name="kanji_title" translatable="false">Kanji</string>
+    <string name="hiragana_title">Hiragana</string>
+    <string name="katakana_title">Katakana</string>
+    <string name="kanji_title">Kanji</string>
     <string name="word_title">Vocabulary</string>
 
     <string name="title_activity_main_settings">Settings</string>
