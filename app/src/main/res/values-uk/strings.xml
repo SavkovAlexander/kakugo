@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hiragana"><font size="30">ひらがな</font>\nХІРАҐАНА</string>
+    <string name="katakana"><font size="30">カタカナ</font>\nКАТАКАНА</string>
+    <string name="kanji"><font size="30">漢字</font>\nКАНДЗІ</string>
+    <string name="word"><font size="30">語彙</font>\nСЛОВНИК</string>
+    <string name="settings"><font size="30">設定</font>\nНАЛАШТУВАННЯ</string>
+    <string name="hiragana_selection">Вибір хіраґани</string>
+    <string name="katakana_selection">Вибір катакана</string>
+    <string name="kanji_selection">Вибір кандзі</string>
+    <string name="word_selection">Вибір слів</string>
+    <string name="select_all">Обрати все</string>
+    <string name="select_none">Зняти виділення</string>
+    <string name="autoselect_from_kanji">Автоматичний вибір слів з обраних кандзі</string>
+    <string name="autoselect_from_kanji_short">Автоматично</string>
+    <string name="import_selection">Імпортувати список кандзі</string>
+    <string name="database_error">Помилка бази даних</string>
+    <string name="custom_test">Корістувацький тест</string>
+    <string name="select_test_types">Оберіть типи питань:</string>
+    <string name="select_at_least_one_type">Ви повинні вибрати хоча б один тип питань</string>
+
+    <string name="hiragana_to_romaji">Хіраґана → ромадзі (ひ→hi)</string>
+    <string name="romaji_to_hiragana">Ромадзі → хіраґана (hi→ひ)</string>
+    <string name="hiragana_to_romaji_typing">Хіраґана → ромадзі-текст (ひ→hi)</string>
+    <string name="hiragana_drawing">Написання хіраґани</string>
+
+    <string name="katakana_to_romaji">Катакана → ромадзі (ヒ→hi)</string>
+    <string name="romaji_to_katakana">Ромадзі → катакана (hi→ヒ)</string>
+    <string name="katakana_to_romaji_typing">Катакана → ромадзі-текст (ヒ→hi)</string>
+    <string name="katakana_drawing">Написання катакани</string>
+
+    <string name="kanji_to_reading">Кандзі → читання (日→ひ)</string>
+    <string name="reading_to_kanji">Читання → кандзі (ひ→日)</string>
+    <string name="kanji_to_meaning">Кандзі → значення (日→день)</string>
+    <string name="meaning_to_kanji">Значення → кандзі (день→日)</string>
+    <string name="kanji_composition">Композиція кандзі (休→亻+木)</string>
+    <string name="kanji_drawing">Написання кандзі</string>
+
+    <string name="word_to_reading">Слово → читання (日の出→ひので)</string>
+    <string name="reading_to_word">Читання → слово (ひので→日の出)</string>
+    <string name="word_to_meaning">Слово → значення (日の出→схід сонця)</string>
+    <string name="meaning_to_word">Значення → слово (схід сонця→日の出)</string>
+
+    <string name="hiragana_to_romaji_title">Хіраґана → ромадзі</string>
+    <string name="romaji_to_hiragana_title">Ромадзі → хіраґана</string>
+    <string name="hiragana_to_romaji_typing_title">Хіраґана → ромадзі-текст</string>
+    <string name="hiragana_drawing_title">Написання хіраґани</string>
+
+    <string name="katakana_to_romaji_title">Катакана → ромадзі</string>
+    <string name="romaji_to_katakana_title">Ромадзі → катакана</string>
+    <string name="katakana_to_romaji_typing_title">Катакана → ромадзі-текст</string>
+    <string name="katakana_drawing_title">Написання катакани</string>
+
+    <string name="kanji_to_reading_title">Кандзі → читання</string>
+    <string name="reading_to_kanji_title">Читання → кандзі</string>
+    <string name="kanji_to_meaning_title">Кандзі → значення</string>
+    <string name="meaning_to_kanji_title">Значення → кандзі</string>
+    <string name="kanji_composition_title">Композиція кандзі</string>
+    <string name="kanji_drawing_title">Написання кандзі</string>
+
+    <string name="word_to_reading_title">Слово → читання</string>
+    <string name="reading_to_word_title">Читання → слово</string>
+    <string name="word_to_meaning_title">Слово → значення</string>
+    <string name="meaning_to_word_title">Значення → слово</string>
+
+    <string name="sure">Точно</string>
+    <string name="maybe">Напевно</string>
+    <string name="dont_know">Не знаю</string>
+    <string name="score_string">Поточний рахунок: %1$d/%2$d</string>
+    <string name="jlpt_search">Пошук</string>
+    <string name="search_kanji_hint">Пошук кандзі&#8230;</string>
+    <string name="confirm_test_stop_title">Завершити сесію</string>
+    <string name="confirm_test_stop_message">Ви впевнені, що хочете завершити сесію?</string>
+    <string name="enable_a_few_items">Ви повинні вибрати не менше 10 елементів для початку сесії</string>
+    <string name="initializing_kanji_db">Ініціалізація бази даних</string>
+    <string name="autoselecting_words">Вибір слів за обраними кандзі</string>
+    <string name="failed_to_init_db">Помилка ініціалізації бази даних: %1$s</string>
+    <string name="info_button">Показати деталі</string>
+    <string name="next">Далі</string>
+    <string name="hint">Підказка</string>
+    <string name="save_current_selection">Зберегти поточний список</string>
+    <string name="load_selection">Завантажити список</string>
+    <string name="selection_presentation">%1$s (%2$d елементів)</string>
+    <string name="delete">Видалити</string>
+    <string name="loaded_selection">Список \"%1$s\" завантажен</string>
+    <string name="deleted_selection">Список \"%1$s\" видален</string>
+    <string name="saved_selection">Поточний список збережений як \"%1$s\"</string>
+    <string name="answerDone">Готово</string>
+    <string name="enter_name_of_selection">Введіть ім\'я для списку</string>
+    <string name="could_not_import_file">Не вдалось імпортувати файл: %1$s</string>
+    <string name="import_kanji_help">Ця функція дозволяє імпортувати список кандзі з файлу. Файл повинен містити всі імпортовані кандзі в один рядок, без пробілів або інших розділювачів.</string>
+    <string name="additional_kanji">Додаткові кандзі</string>
+    <string name="jlpt_level_n">Рівень JLPT %1$s</string>
+    <string name="rtk_index_range">Індекси %1$s+</string>
+    <string name="rtk6_index_range">Індекси %1$s+</string>
+    <string name="search_word_hint">Пошук слова&#8230;</string>
+    <string name="hiragana_title">Хіраґана</string>
+    <string name="katakana_title">Катакана</string>
+    <string name="kanji_title">Кандзі</string>
+    <string name="word_title">Словник</string>
+    
+    <string name="enable_dark_theme">Активувати темну тему</string>
+    <string name="title_activity_main_settings">Налаштування</string>
+    <string name="pref_cat_appearance">Зовнішній вигляд і поведінка</string>
+    <string name="pref_cat_language">Мова</string>
+    <string name="pref_cat_classification">Класифікація</string>
+    <string name="pref_cat_about">Про програму</string>
+    <string name="will_update_later">Оновиться після виходу з екрана налаштувань</string>
+    <string name="dictionary_language">Мова словника</string>
+    <string name="lang_system_default">Мова системи</string>
+    <string name="kanji_classification">Класифікація кандзі</string>
+    <string name="use_custom_font">Використовувати корістувацький шрифт</string>
+    <string name="pick_custom_font">Оберіть японський шрифт</string>
+    <string name="single_button_off_summary">З'являться кнопки \"Точно\" і \"Напевно\"</string>
+    <string name="single_button_on_summary">Довге натискання на відповідь відзначить її як \"напевно\"</string>
+    <string name="single_button_mode">Режим \"одна кнопка\"</string>
+    <string name="failed_to_load_font">Не вдалося завантажити шрифт: %s</string>
+    <string name="failed_to_load_resource">Не вдалося завантажити ресурс: %s</string>
+
+    <string name="title_about">Про Kakugo</string>
+    <string name="about_text"><![CDATA[
+        <p>Kakugo - додаток для вивчення Японської мови. Версія %1$s (%2$d).</p>
+
+        <p>Це відкрите програмне забезпечення і доступно за посиланням <a href="https://github.com/blastrock/kakugo/">github</a> за ліцензією GPLv3.</p>
+
+        <p>Словник кандзі базується на <a href="http://www.edrdg.org/kanjidic/kanjidic.html">kanjidic</a>.</p>
+        <p>Список слів базується на <a href="http://www.edrdg.org/jmdict/j_jmdict.html">JMdict</a>.</p>
+        <p>Дані про подібність кандзі взяті з <a href="http://lars.yencken.org/datasets/phd/">дослідження Dr. Lars Yencken</a>.</p>
+        <p>Композиція кандзі і дані про написання взяті з <a href="https://kanjivg.tagaini.net/">KanjiVG</a>.</p>
+        <p>Шрифт іконки додатку <a href="https://www.freejapanesefont.com/nagayama-kai-calligraphy-font-download/">Nagayama Kai<a>.</p>
+        <p>Шрифт заголовку додатка <a href="https://www.dafont.com/fonters.font">Fonters<a>.</p>
+
+        <p>Kakugo  Copyright &#169; 2019  Philippe Daouadi</p>
+    ]]></string>
+    
+    <string name="changelog">Changelog</string>
+    <string name="changelog_contents"><![CDATA[
+        <h3>What\'s new in 1.30?</h3>
+
+        <br/>- Added new more accurate spaced repetition system
+
+        <br/><br/><h3>What\'s new in 1.29?</h3>
+
+        <br/>- Added new custom test mode for kanji
+        <br/>- Reworked kanji composition test
+    ]]></string>
+</resources>

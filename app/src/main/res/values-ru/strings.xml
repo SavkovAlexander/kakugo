@@ -98,6 +98,7 @@
     <string name="katakana_title">Катакана</string>
     <string name="kanji_title">Кандзи</string>
     <string name="word_title">Словарь</string>
+    
     <string name="enable_dark_theme">Включить темную тему</string>
     <string name="title_activity_main_settings">Настройки</string>
     <string name="pref_cat_appearance">Внешний вид и поведение</string>
