@@ -111,7 +111,7 @@
     <string name="kanji_classification">Класифікація кандзі</string>
     <string name="use_custom_font">Використовувати корістувацький шрифт</string>
     <string name="pick_custom_font">Оберіть японський шрифт</string>
-    <string name="single_button_off_summary">З'являться кнопки \"Точно\" і \"Напевно\"</string>
+    <string name="single_button_off_summary">З\'являться кнопки \"Точно\" і \"Напевно\"</string>
     <string name="single_button_on_summary">Довге натискання на відповідь відзначить її як \"напевно\"</string>
     <string name="single_button_mode">Режим \"одна кнопка\"</string>
     <string name="failed_to_load_font">Не вдалося завантажити шрифт: %s</string>
